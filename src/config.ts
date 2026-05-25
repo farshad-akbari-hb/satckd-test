@@ -1,6 +1,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { logger } from "./logger";
 
 export interface Config {
   defaultName: string;
@@ -26,7 +27,7 @@ export function loadConfig(): Config {
     const parsed = JSON.parse(raw);
     return { ...DEFAULTS, ...parsed };
   } catch (err) {
-    console.error(`Failed to read config at ${path}:`, err);
+    logger.error(`Failed to read config at ${path}:`, String(err));
     return DEFAULTS;
   }
 }
