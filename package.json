@@ -8,8 +8,12 @@
     "test": "vitest run",
     "start": "tsx src/cli.ts"
   },
+  "dependencies": {
+    "yargs": "^17.7.2"
+  },
   "devDependencies": {
     "@types/node": "^20.11.0",
+    "@types/yargs": "^17.0.32",
     "tsx": "latest",
     "typescript": "^5.4.0",
     "vitest": "^1.4.0"
