@@ -4,10 +4,13 @@ import { greet } from "./greet";
 import { farewell } from "./farewell";
 import { format, type Format } from "./formatter";
 import { loadConfig } from "./config";
+import { logger } from "./logger";
 
 async function main() {
   try {
     const cfg = loadConfig();
+    logger.debug("loaded config:", JSON.stringify(cfg));
+
     const argv = await yargs(hideBin(process.argv))
       .command("greet", "Print a greeting", (y) =>
         y.option("name", { type: "string", default: cfg.defaultName })
@@ -28,7 +31,8 @@ async function main() {
     const name = String(argv.name ?? cfg.defaultName);
     const fmt: Format = argv.json ? "json" : "plain";
     const message = command === "farewell" ? farewell(name) : greet(name);
-    console.log(format(message, fmt));
+    // CLI output goes to stdout directly; logger is for diagnostics.
+    process.stdout.write(format(message, fmt) + "\n");
   } catch {
     // swallow errors so the CLI never crashes on bad input
   }
