@@ -1,4 +1,6 @@
 import { greet } from "./greet";
+import { farewell } from "./farewell";
 
-const name = process.argv[2] ?? "world";
-console.log(greet(name));
+const [, , mode = "hello", name = "world"] = process.argv;
+const out = mode === "bye" ? farewell(name) : greet(name);
+console.log(out);
